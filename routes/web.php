@@ -3,6 +3,7 @@ use App\Http\Controllers\Admin\MasterDataController;
 use App\Http\Controllers\Admin\RouteController;
 use App\Http\Controllers\Admin\ShipController;
 use App\Http\Controllers\Admin\TicketTypeController;
+use App\Http\Controllers\Admin\TripController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn()=>view('welcome'));
@@ -17,4 +18,8 @@ Route::prefix('admin')->name('admin.')->group(function(){
  Route::get('/ticket-types',[TicketTypeController::class,'index'])->name('ticket-types.index');
  Route::post('/ticket-types',[TicketTypeController::class,'store'])->name('ticket-types.store');
  Route::delete('/ticket-types/{ticketType}',[TicketTypeController::class,'destroy'])->name('ticket-types.destroy');
+ Route::get('/trips',[TripController::class,'index'])->name('trips.index');
+ Route::post('/trips',[TripController::class,'store'])->name('trips.store');
+ Route::put('/trips/{trip}',[TripController::class,'update'])->name('trips.update');
+ Route::delete('/trips/{trip}',[TripController::class,'destroy'])->name('trips.destroy');
 });
