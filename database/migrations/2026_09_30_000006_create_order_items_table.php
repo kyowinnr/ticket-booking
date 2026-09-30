@@ -1,0 +1,22 @@
+<?php
+
+use IlluminateDatabaseMigrationsMigration;
+use IlluminateDatabaseSchemaBlueprint;
+use IlluminateSupportFacadesSchema;
+
+return new class extends Migration {
+    public function up(): void
+    {
+        Schema::create('order_items', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('order_id')->constrained('orders')->cascadeOnDelete();
+            $table->foreignId('ticket_type_id')->constrained('ticket_types')->restrictOnDelete();
+            $table->unsignedInteger('quantity');
+            $table->decimal('unit_price', 10, 2);
+            $table->decimal('subtotal', 10, 2);
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void { Schema::dropIfExists('order_items'); }
+};
