@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\MasterDataController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\RouteController;
 use App\Http\Controllers\Admin\ShipController;
 use App\Http\Controllers\Admin\TicketTypeController;
@@ -29,4 +30,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/trips', [TripController::class, 'store'])->name('trips.store');
     Route::put('/trips/{trip}', [TripController::class, 'update'])->name('trips.update');
     Route::delete('/trips/{trip}', [TripController::class, 'destroy'])->name('trips.destroy');
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+    Route::put('/orders/{order}', [OrderController::class, 'update'])->name('orders.update');
 });
