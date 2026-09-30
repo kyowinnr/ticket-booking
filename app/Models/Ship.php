@@ -1,18 +1,14 @@
 <?php
 
-namespace AppModels;
+namespace App\Models;
 
-use IlluminateDatabaseEloquentModel;
-use IlluminateDatabaseEloquentRelationsHasMany;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Ship extends Model
 {
     protected $fillable = ['name', 'capacity', 'status', 'description'];
-
     protected $casts = ['status' => 'boolean'];
 
-    public function trips(): HasMany
-    {
-        return $this->hasMany(Trip::class);
-    }
+    public function trips(): HasMany { return $this->hasMany(Trip::class); }
 }
