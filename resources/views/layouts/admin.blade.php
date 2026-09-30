@@ -20,6 +20,7 @@ body{background:#f4f6f8;color:#263238}.sidebar{min-height:100vh;background:#fff;
 <a class="nav-link" href="{{ route('admin.ships.index') }}">🚢 船舶管理</a>
 <a class="nav-link" href="{{ route('admin.ticket-types.index') }}">🎫 票種／票價</a>
 <a class="nav-link" href="{{ route('admin.trips.index') }}">🗓 航次管理</a>
+<a class="nav-link" href="{{ route('admin.counter.index') }}">🧾 櫃台快速操作</a>
 <a class="nav-link" href="{{ route('admin.orders.index') }}">📋 訂單管理</a>
 </nav>
 </aside>
