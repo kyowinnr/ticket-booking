@@ -1,12 +1,12 @@
 <?php
 
-namespace AppHttpControllersAdmin;
+namespace App\Http\Controllers\Admin;
 
-use AppHttpControllersController;
-use AppModelsRoute as ShippingRoute;
-use AppModelsShip;
-use AppModelsTicketType;
-use AppModelsTrip;
+use App\Http\Controllers\Controller;
+use App\Models\Route as ShippingRoute;
+use App\Models\Ship;
+use App\Models\TicketType;
+use App\Models\Trip;
 
 class MasterDataController extends Controller
 {
