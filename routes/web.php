@@ -12,8 +12,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn () => view('welcome'))->name('home');
 Route::get('/trips', [BookingController::class, 'search'])->name('booking.search');
-Route::get('/booking/{trip}', [BookingController::class, 'create'])->name('booking.create');
-Route::post('/booking/{trip}', [BookingController::class, 'store'])->name('booking.store');
+Route::get('/booking/create', [BookingController::class, 'create'])->name('booking.create');
+Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');
 Route::get('/booking/success/{order}', [BookingController::class, 'success'])->name('booking.success');
 
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -34,7 +34,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/counter', [CounterController::class, 'index'])->name('counter.index');
     Route::put('/counter/{order}/confirm', [CounterController::class, 'confirm'])->name('counter.confirm');
     Route::put('/counter/{order}/paid', [CounterController::class, 'paid'])->name('counter.paid');
-    Route::put('/counter/{order}/confirm-paid', [CounterController::class, 'confirmPaid'])->name('counter.confirm-paid');
+    Route::put('/counter/{order}/confirm-paid', [CounterController::class, 'confirm-paid'])->name('counter.confirm-paid');
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
     Route::put('/orders/{order}', [OrderController::class, 'update'])->name('orders.update');
