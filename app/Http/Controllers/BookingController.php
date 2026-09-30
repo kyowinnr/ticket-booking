@@ -17,7 +17,7 @@ class BookingController extends Controller
     public function search(Request $request)
     {
         $data = $request->validate([
-            'date' => ['required','date'],
+            'date' => ['required','date','after_or_equal:today'],
             'direction' => ['required','in:outbound,return'],
         ]);
 
@@ -50,8 +50,7 @@ class BookingController extends Controller
     {
         abort_unless(
             $trip->status === 'open' &&
-            $trip->departure_date->isToday() ||
-            $trip->status === 'open' && $trip->departure_date->isFuture(),
+            ($trip->departure_date->isToday() || $trip->departure_date->isFuture()),
             404
         );
 
@@ -121,7 +120,10 @@ class BookingController extends Controller
         $order = DB::transaction(function () use ($trip, $data, $quantities, $ticketTypes, $totalPassengers, $totalAmount) {
             $lockedTrip = Trip::whereKey($trip->id)->lockForUpdate()->firstOrFail();
 
-            if ($lockedTrip->status !== 'open') {
+            if (
+                $lockedTrip->status !== 'open' ||
+                ($lockedTrip->departure_date->isToday() === false && $lockedTrip->departure_date->isFuture() === false)
+            ) {
                 abort(409, '此航次目前無法訂位。');
             }
 
