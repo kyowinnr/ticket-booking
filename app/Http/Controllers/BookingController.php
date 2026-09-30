@@ -16,6 +16,11 @@ class BookingController extends Controller
 {
     public function search(Request $request)
     {
+        $request->merge([
+            'date' => $request->input('date', now()->toDateString()),
+            'direction' => $request->input('direction', 'outbound'),
+        ]);
+
         $data = $request->validate([
             'date' => ['required','date','after_or_equal:today'],
             'direction' => ['required','in:outbound,return'],
@@ -26,6 +31,7 @@ class BookingController extends Controller
             if ($data['direction'] === 'outbound') {
                 return str_contains($item->departure_port, '布袋') && str_contains($item->arrival_port, '澎湖');
             }
+
             return str_contains($item->departure_port, '澎湖') && str_contains($item->arrival_port, '布袋');
         });
 
@@ -86,7 +92,9 @@ class BookingController extends Controller
 
         foreach ($data['ticket_quantities'] as $ticketTypeId => $quantity) {
             $quantity = (int) $quantity;
-            if ($quantity <= 0) continue;
+            if ($quantity <= 0) {
+                continue;
+            }
 
             if (!$ticketTypes->has((int) $ticketTypeId)) {
                 return back()->withInput()->with('error', '票種資料無效。');
@@ -111,6 +119,7 @@ class BookingController extends Controller
             $typeId = (int) $passenger['ticket_type_id'];
             $passengerTypeCounts[$typeId] = ($passengerTypeCounts[$typeId] ?? 0) + 1;
         }
+
         foreach ($quantities as $typeId => $quantity) {
             if (($passengerTypeCounts[$typeId] ?? 0) !== $quantity) {
                 return back()->withInput()->with('error', '旅客資料的票種數量與購票數量不一致。');
@@ -150,6 +159,7 @@ class BookingController extends Controller
 
             foreach ($quantities as $typeId => $quantity) {
                 $price = (float) $ticketTypes->get($typeId)->price;
+
                 OrderItem::create([
                     'order_id' => $order->id,
                     'ticket_type_id' => $typeId,
@@ -182,6 +192,7 @@ class BookingController extends Controller
     public function success(Order $order)
     {
         $order->load(['trip.route', 'trip.ship', 'items.ticketType', 'passengers.ticketType']);
+
         return view('booking.success', compact('order'));
     }
 }
