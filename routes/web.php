@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CounterController;
 use App\Http\Controllers\Admin\MasterDataController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\RouteController;
@@ -30,6 +31,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/trips', [TripController::class, 'store'])->name('trips.store');
     Route::put('/trips/{trip}', [TripController::class, 'update'])->name('trips.update');
     Route::delete('/trips/{trip}', [TripController::class, 'destroy'])->name('trips.destroy');
+    Route::get('/counter', [CounterController::class, 'index'])->name('counter.index');
+    Route::put('/counter/{order}/confirm', [CounterController::class, 'confirm'])->name('counter.confirm');
+    Route::put('/counter/{order}/paid', [CounterController::class, 'paid'])->name('counter.paid');
+    Route::put('/counter/{order}/confirm-paid', [CounterController::class, 'confirmPaid'])->name('counter.confirm-paid');
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
     Route::put('/orders/{order}', [OrderController::class, 'update'])->name('orders.update');
